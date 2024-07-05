@@ -1,9 +1,8 @@
 local M = {}
 
-function M.terminal_open(cmd, config)
+function M.terminal_open(cmd)
   local Terminal = require("toggleterm.terminal").Terminal
-  config = config or { direction = "float" }
-  config.cmd = cmd
+  local config = { cmd = cmd, direction = "float" }
   local lazygit = Terminal:new(config)
   lazygit:open()
 end
