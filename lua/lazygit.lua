@@ -1,10 +1,7 @@
--- main module file
-local module = require("plugin_name.module")
-
 ---@class Config
----@field opt string Your config option
+---@field direction 'float' | 'horizontal' | 'vertical'
 local config = {
-  opt = "Hello!",
+  direction = "float",
 }
 
 ---@class MyModule
@@ -20,8 +17,13 @@ M.setup = function(args)
   M.config = vim.tbl_deep_extend("force", M.config, args or {})
 end
 
-M.hello = function()
-  return module.my_first_function(M.config.opt)
+---@param args string?
+---@param config Config?
+M.open = function(args, config)
+  local terminal = require("lazygit.terminal")
+  local cmd = "lazygit" .. (args or "")
+  config = vim.tbl_deep_extend("force", M.config, config or {})
+  return terminal.terminal_open(cmd, config)
 end
 
 return M
